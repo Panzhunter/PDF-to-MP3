@@ -13,6 +13,8 @@ from urllib.error import HTTPError
 SPEED=150
 VOLUME=0.5
 VOICE=0
+
+
 #Creating a new window and configurations
 speak = pyttsx3.init()
 voices = speak.getProperty('voices')
@@ -30,12 +32,11 @@ canvas.create_image(128, 128) #, image=head_phone_image
 website_input_label = Label(text="Website")
 website_input_label.grid(row=1, column=0)
 
-input_label = Label(text="File Location")
-input_label.grid(row=1, column=1)
-
-
 output_label = Label(text="Output Folder")
-output_label.grid(row=1, column=2)
+output_label.grid(row=1, column=1)
+
+input_label = Label(text="File Location")
+input_label.grid(row=1, column=2)
 
 volume_label = Label(text="Volume")
 volume_label.grid(row=1, column=3)
@@ -52,13 +53,13 @@ website_input = Entry(width=30)
 website_input.insert(END, string="Enter Website URL")
 website_input.grid(row=2, column=0)
 
-file_input = Entry(width=30)
-file_input.insert(END, string="Enter the path to your file")
-file_input.grid(row=2, column=1)
-
 output = Entry(width=30)
 output.insert(END, string="Enter the output folder")
-output.grid(row=2, column=2)
+output.grid(row=2, column=1)
+
+file_input = Entry(width=30)
+file_input.insert(END, string="Enter the path to your file")
+file_input.grid(row=2, column=2)
 
 def pdf_to_text():
     input_file_path = file_input.get()
@@ -96,12 +97,9 @@ def text_to_mp3(text, mp3_name):
     output_path = mp3_output_path+"/"+mp3_name+".mp3"
    
     # TODO Add speed, volume, and voices
-    speed= SPEED
-    volume=VOLUME
-    voice=VOICE
-    speak.setProperty('rate', speed)
-    speak.setProperty('volume', volume)
-    speak.setProperty('voice', voice[VOICE].id)
+    speak.setProperty('rate', SPEED)
+    speak.setProperty('volume', VOLUME)
+    speak.setProperty('voice', voices[VOICE].id)
     speak.save_to_file(text.replace("\n", " "), output_path)
     speak.runAndWait()
     speak.stop()
@@ -136,21 +134,16 @@ def start_file_conversion():
 
 
 def start_website_conversion():
-    
+    #TODO Figure out how to name sites that don't have a savable name 
     url = website_input.get()
     text = convert_website(url=url)
     if url.split("/")[-1]:
         mp3_name = url.split("/")[-1]
     else:
-        mp3_name = url.split("/")[-2]
-    # mp3_name = url.split("/")[-1]   
+        mp3_name = url.split("/")[-2]   
     text_to_mp3(text=text, mp3_name=mp3_name)
-        
-        
+      
     messagebox.showinfo(title="Confirmation", message=f"{mp3_name}.mp3 was Saved in the Target Location")
-    # except Exception as e:
-    #     print(e)
-    #     messagebox.showerror(title="Error", message="Please double check website and fields")
       
 def convert_website(url):
     
@@ -203,9 +196,6 @@ def find_output_location():
     output.insert(0, string=window.filename)
     
 def test_voice():
-    # speed=SPEED
-    # volume=VOLUME
-    # voice=VOICE
     speak.setProperty('rate', SPEED)
     speak.setProperty('volume', VOLUME)
     speak.setProperty('voice', voices[VOICE].id)
@@ -215,11 +205,11 @@ def test_voice():
 
 
 #calls action() when pressed
-find_input = Button(text="Open File Location", command=find_file, width=20)
-find_input.grid(row=3, column=1)
+find_output = Button(text="Open Output Location", command=find_output_location, width=45)
+find_output.grid(row=3, column=0, columnspan=2)
 
-find_output = Button(text="Open Output Location", command=find_output_location, width=20)
-find_output.grid(row=3, column=2)
+find_input = Button(text="Open File Location", command=find_file, width=20)
+find_input.grid(row=3, column=2)
 
 convert_file_button = Button(text="Convert File", command=start_file_conversion, width=50, bg='green')
 convert_file_button.grid(row=4, column=1, columnspan=2)
@@ -231,8 +221,7 @@ test_voice_button = Button(text="Test Voice", command=test_voice, width=20)
 test_voice_button.grid(row=4, column=3, columnspan=3)
 
 
-#Scale
-#Called with current scale value.
+#Scales
 def volume_scale_used(value):
     global VOLUME
     VOLUME = int(value)/100
