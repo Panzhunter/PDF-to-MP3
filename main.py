@@ -19,7 +19,7 @@ UNUSABLE_CHARECTORS = ['#', '%', '$', '<', '>', '+', '!', '`', '{', '}', '?', '"
 # Enter the RGB as a tuple in the variables below
 
 
-# # Dark Theme
+#---------------------------- Dark Theme ---------------------------- 
 # #Background Color
 # BACK_GROUND_COLOR = (86, 91, 102)
 # ENTRY_BACKGROUND_COLOR = (0, 0, 0)
@@ -42,8 +42,7 @@ UNUSABLE_CHARECTORS = ['#', '%', '$', '<', '>', '+', '!', '`', '{', '}', '?', '"
 # TEST_VOICE_BUTTON_COLOR = (198, 151, 73)
 
 
-
-# Light Theme
+#---------------------------- Light Theme ---------------------------- 
 # Background Color
 BACK_GROUND_COLOR = (242, 222, 186)
 ENTRY_BACKGROUND_COLOR = (242, 222, 186)
@@ -64,6 +63,28 @@ FILE_BUTTON_COLOR = (14, 94, 111)
 CONVERT_WEBSITE_BUTTON_COLOR = (58, 136, 145)
 COVERT_FILE_BUTTON_COLOR = (58, 136, 145)
 TEST_VOICE_BUTTON_COLOR = (58, 136, 145)
+
+
+#---------------------------- Custom Theme ---------------------------- 
+# # Background Color
+# BACK_GROUND_COLOR = 
+# ENTRY_BACKGROUND_COLOR = 
+# #Font Color
+# LABEL_FONT_COLOR = 
+# ENTRY_FONT_COLOR = 
+# BUTTON_FONT_COLOR = 
+
+# #Slider Color
+# SLIDER_COLOR = 
+
+# # Button Row 1
+# OUTPUT_BUTTON_COLOR = 
+# FILE_BUTTON_COLOR = 
+
+# #Button Row 2
+# CONVERT_WEBSITE_BUTTON_COLOR = 
+# COVERT_FILE_BUTTON_COLOR = 
+# TEST_VOICE_BUTTON_COLOR = 
 
 def _from_rgb(rgb):
     """translates an rgb tuple of int to a tkinter friendly color code
@@ -145,13 +166,15 @@ def website_to_text(url):
         messagebox.showerror(title="Error", message="This website is currently unsupported")
         
     else:
-        #TODO Clean this up so it doesn't have weird pauses
         my_HTML = my_request.read().decode("utf8")
         soup = BeautifulSoup(my_HTML, features='html.parser')
+        #TODO Pull in Paragraph Headings
         p_tags = soup.find_all('p')
         website_text = ""
         for tag in p_tags:
-            website_text+=tag.get_text()
+            website_text+=(' '+tag.get_text())
+        
+        print(website_text)
         return website_text
 
 def start_file_conversion():
@@ -254,7 +277,7 @@ output.config(background=_from_rgb(ENTRY_BACKGROUND_COLOR), foreground=_from_rgb
 output.grid(row=2, column=1)
 
 website_input = Entry(width=30)
-website_input.insert(END, string="Website URL")
+website_input.insert(END, string="Paste Website URL")
 website_input.config(background=_from_rgb(ENTRY_BACKGROUND_COLOR), foreground=_from_rgb(ENTRY_FONT_COLOR))
 website_input.grid(row=2, column=2)
 
