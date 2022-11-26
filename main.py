@@ -2,6 +2,7 @@ import pyttsx3
 import urllib.request
 import requests
 import docx
+import webbrowser
 from urllib.request import Request
 from tkinter import filedialog, messagebox
 from tkinter import *
@@ -244,6 +245,8 @@ def volume_scale_used(value):
     global VOLUME
     VOLUME = int(value)/100
     
+def callback(url):
+   webbrowser.open_new_tab(url)
 
 # UI Row 1
 input_label = Label(text="File Location", fg=_from_rgb(LABEL_FONT_COLOR), bg=_from_rgb(BACK_GROUND_COLOR))
@@ -312,5 +315,11 @@ convert_website_button.grid(row=4, column=2, columnspan=1)
 test_voice_button = Button(text="Test Voice", command=test_voice, width=15, fg=_from_rgb(BUTTON_FONT_COLOR), bg=_from_rgb(TEST_VOICE_BUTTON_COLOR))
 test_voice_button.grid(row=4, column=3, columnspan=3)
 
+
+# UI Row 5
+author_info = Label(text="Made by Panzhunter", fg=_from_rgb(LABEL_FONT_COLOR), bg=_from_rgb(BACK_GROUND_COLOR), cursor="hand2")
+author_info.grid(row=5, column=3, columnspan=3)
+author_info.bind("<Button-1>", lambda e:
+    callback("github.com/Panzhunter"))
 
 window.mainloop()
