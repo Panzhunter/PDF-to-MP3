@@ -5,10 +5,10 @@
 This program was made for personal use but after talking to others about it, I decided to share it. 
 
 Currently the following can be converted to mp3:
--Website Articles
--PDF files
--docx files
--Txt files
+*Website Articles
+*PDF files
+*docx files
+*Txt files
 
 ### How to install
 To use this program you can use the compiled exe or run the python file directly. The exe runs natively on Windows but you will need to install wine to run it on Mac or Linux. If you choose to install python, download the latest version from the official website along with pip, included in the official python installer, to make installing and updating libraries simple. After installing open a powershell, cmd, or terminal window in the folder holding the script, then run "pip install -r requirements.txt" to install all dependencies. After that it will be ready for use.  
