@@ -9,10 +9,10 @@ from PyPDF2 import PdfFileReader
 from bs4 import BeautifulSoup
 from urllib.error import HTTPError
 
-#TODO JSON to save settings, Clean up UI
 SPEED=150
 VOLUME=0.5
 VOICE=0
+UNUSABLE_CHARECTORS = ['#', '%', '$', '<', '>', '+', '!', '`', '{', '}', '?', '"', '=', '/', '\\', ':', '@']
 
 # Example color palettes can be found here
 # https://colorhunt.co/palette/f2debaffefd60e5e6f3a8891
@@ -152,8 +152,6 @@ def website_to_text(url):
         website_text = ""
         for tag in p_tags:
             website_text+=tag.get_text()
-
-            print(tag.get_text())
         return website_text
 
 def start_file_conversion():
@@ -162,6 +160,8 @@ def start_file_conversion():
     file_type = file.split(".")[-1]
     print(file_type)
     mp3_name = file.split("/")[-1].split(".")[0]
+    if UNUSABLE_CHARECTORS in mp3_name:
+        mp3_name = 'untitled' 
     
     try:
         if file_type == "pdf":
@@ -181,7 +181,6 @@ def start_file_conversion():
         messagebox.showerror(title="Error", message="Please double check all fields and files")
 
 def start_website_conversion():
-    #TODO Figure out how to name sites that don't have a savable name 
     url = website_input.get()
     text = website_to_text(url=url)
     if url.split("/")[-1]:
@@ -245,17 +244,17 @@ voice_label.grid(row=1, column=5)
 
 # UI Row 2
 file_input = Entry(width=30)
-file_input.insert(END, string="Enter the path to your file")
+file_input.insert(END, string="File Path")
 file_input.config(background=_from_rgb(ENTRY_BACKGROUND_COLOR), foreground=_from_rgb(ENTRY_FONT_COLOR))
 file_input.grid(row=2, column=0)
 
 output = Entry(width=30)
-output.insert(END, string="Enter the output folder")
+output.insert(END, string="Output Folder")
 output.config(background=_from_rgb(ENTRY_BACKGROUND_COLOR), foreground=_from_rgb(ENTRY_FONT_COLOR))
 output.grid(row=2, column=1)
 
 website_input = Entry(width=30)
-website_input.insert(END, string="Enter Website URL")
+website_input.insert(END, string="Website URL")
 website_input.config(background=_from_rgb(ENTRY_BACKGROUND_COLOR), foreground=_from_rgb(ENTRY_FONT_COLOR))
 website_input.grid(row=2, column=2)
 
