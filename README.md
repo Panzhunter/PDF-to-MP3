@@ -28,6 +28,9 @@ https://www.winehq.org/
 3) Select your output folder
 4) Use the appropriate conversion button.
 
+**NOTE**
+If running on Linux you will need to install "espeak"
+https://github.com/espeak-ng/espeak-ng/blob/master/docs/guide.md#linux
 
 
 ### How to Update the Theme
