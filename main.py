@@ -13,7 +13,7 @@ from urllib.error import HTTPError
 SPEED=150
 VOLUME=0.5
 VOICE=0
-UNUSAVABLE_CHARECTORS = ['#', '%', '$', '<', '>', '+', '!', '`', '{', '}', '?', '"', '=', '/', '\\', ':', '@']
+UNSAVABLE_CHARECTORS = ['#', '%', '$', '<', '>', '+', '!', '`', '{', '}', '?', '"', '=', '/', '\\', ':', '@']
 
 # Example color palettes can be found here
 # https://colorhunt.co/palette/f2debaffefd60e5e6f3a8891
@@ -184,7 +184,7 @@ def start_file_conversion():
     file_type = file.split(".")[-1]
     print(file_type)
     mp3_name = file.split("/")[-1].split(".")[0]
-    if UNUSAVABLE_CHARECTORS in mp3_name:
+    if any(i in mp3_name for i in UNSAVABLE_CHARECTORS):
         mp3_name = 'untitled' 
     
     try:
